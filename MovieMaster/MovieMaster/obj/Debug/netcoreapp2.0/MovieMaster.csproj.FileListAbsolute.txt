@@ -1,0 +1,11 @@
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\bin\Debug\netcoreapp2.0\MovieMaster.deps.json
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\bin\Debug\netcoreapp2.0\MovieMaster.runtimeconfig.json
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\bin\Debug\netcoreapp2.0\MovieMaster.runtimeconfig.dev.json
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\bin\Debug\netcoreapp2.0\MovieMaster.dll
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\bin\Debug\netcoreapp2.0\MovieMaster.pdb
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.csprojResolveAssemblyReference.cache
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.csproj.CoreCompileInputs.cache
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.AssemblyInfoInputs.cache
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.AssemblyInfo.cs
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.dll
+C:\Users\magnu\project\VideoStore\MovieMaster\MovieMaster\obj\Debug\netcoreapp2.0\MovieMaster.pdb
