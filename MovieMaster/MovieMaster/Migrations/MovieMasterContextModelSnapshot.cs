@@ -2,16 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using MovieMaster.Models;
 using System;
+using MovieMaster.Data;
 
 namespace MovieMaster.Migrations
 {
     [DbContext(typeof(MovieMasterContext))]
-    partial class MovieMasterContextModelSnapshot : ModelSnapshot
+    internal partial class MovieMasterContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

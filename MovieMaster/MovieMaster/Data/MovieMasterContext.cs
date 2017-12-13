@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MovieMaster.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace MovieMaster.Models
+namespace MovieMaster.Data
 {
     public class MovieMasterContext : DbContext
     {

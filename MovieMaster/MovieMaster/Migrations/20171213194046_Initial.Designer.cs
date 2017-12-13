@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using MovieMaster.Models;
 using System;
+using MovieMaster.Data;
 
 namespace MovieMaster.Migrations
 {
