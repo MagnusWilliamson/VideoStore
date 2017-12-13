@@ -7,7 +7,8 @@ namespace MovieMaster.Models
 {
     public class Adress
     {
-        public string Id { get; set; }
+        public string AdressId { get; set; }
+        public string CustomerId { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
