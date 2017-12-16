@@ -11,9 +11,10 @@ using System;
 namespace MovieMaster.Migrations
 {
     [DbContext(typeof(MovieMasterContext))]
-    partial class MovieMasterContextModelSnapshot : ModelSnapshot
+    [Migration("20171216153928_Alpha")]
+    partial class Alpha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

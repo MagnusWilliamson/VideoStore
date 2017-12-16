@@ -1,3 +1,79 @@
-﻿@{
-    ViewData["Title"] = "VIDEO STORE";
-}
+﻿@model IEnumerable<MovieMaster.Models.CustomerAdress>
+
+    @{
+        ViewData["Title"] = "VIDEO STORE";
+    }
+
+    <div class="container">
+        <div class="row">
+            <div align="center">
+                <h1>
+                    <strong>VHS<br></strong>
+                </h1>
+                <h3>
+                    Video Hiring System<br>
+                </h3>
+                <hr />
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Street)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Street)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Active == true)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Street)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZipCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            <a asp-action="RentAMovie" asp-route-id="@item.CustomerId">Rent a movie</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>

@@ -41,11 +41,13 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - MovieMaster</p>
-        </footer>
+        <div id="footer" class="navbar navbar-fixed-bottom" >
+            <div class="panel-footer" style="text-align: center;">
+                    <p >&copy; 2017 - <strong><a href="http://www.qullegium.se">Cognitio Qullegium AB</a><br></strong></p>
+            </div>
+       </div>
     </div>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+

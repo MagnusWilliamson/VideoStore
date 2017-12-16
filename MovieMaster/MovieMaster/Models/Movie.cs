@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 namespace MovieMaster.Models
 {
     public class Movie
     {
+        [Key]
         public string MovieId { get; set; }
         public string Titel { get; set; }
         public int AgeLimit { get; set; }
