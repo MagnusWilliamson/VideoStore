@@ -1,0 +1,51 @@
+﻿@model RentalViewModel
+@{ViewData["Title"] = "RENT A MOVIE";}
+<h2>Rent A Movie</h2>
+<h3><strong>@Model.SelectedCustomer.FirstName @Model.SelectedCustomer.LastName </strong></h3>
+@if (Model.SelectedMovie != null)
+{
+    <h3><strong>Movie: @Model.SelectedMovie.Titel Price: @Model.SelectedMovie.Price kr</strong></h3>
+}
+<table class="table table-striped">
+    <tr>
+        <th>AgeLimit</th>
+        <th>Genre</th>
+        <th>Titel</th>
+        <th>Description</th>
+        <th>ReleaseDate</th>
+        <th>Price</th>
+    </tr>
+    @{
+        foreach (var m in Model.MovieList)
+        {
+            <tr>
+                <td> @Html.DisplayFor(movie => m.AgeLimit) </td>
+                <td> @Html.DisplayFor(movie => m.Genre) </td>
+                <td> @Html.DisplayFor(movie => m.Titel) </td>
+                <td> @Html.DisplayFor(movie => m.Description) </td>
+                <td> @Html.DisplayFor(movie => m.ReleaseDate)</td>
+                <td> @Html.DisplayFor(movie => m.Price)</td>
+                <td><a asp-action="ContractInformation" asp-route-movie=@m.MovieId asp-route-customer=@Model.SelectedCustomer.CustomerId >Select</a></td></tr>
+        }
+    }
+</table>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            @if (@Model.SelectedMovie != null && @Model.SelectedCustomer != null)
+            {
+                <form asp-controller="Home" asp-action="CreateContract" asp-route-movie=@Model.SelectedMovie.MovieId asp-route-customer=@Model.SelectedCustomer.CustomerId>
+                    <div asp-validation-summary="All"></div>
+                    <button class="btn-success">Save</button>
+                </form>
+            }
+            else
+            {
+               <form>
+                   <div></div>
+                   <button class="btn-block">Save</button>
+               </form>
+            }
+        </div>
+    </div>
+</div>

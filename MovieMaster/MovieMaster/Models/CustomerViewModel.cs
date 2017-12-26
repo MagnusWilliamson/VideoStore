@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MovieMaster.Models
 {
     [NotMapped]
-    public class CustomerAdress: Customer
+    public class CustomerViewModel: Customer
     {
         public string Street { get; set; }
         public string City { get; set; }

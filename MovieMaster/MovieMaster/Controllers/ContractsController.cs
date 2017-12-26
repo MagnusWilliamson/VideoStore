@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
@@ -44,6 +41,7 @@ namespace MovieMaster.Controllers
         }
 
         // GET: Contracts/Create
+        /*
         public IActionResult Create()
         {
             return View();
@@ -56,15 +54,12 @@ namespace MovieMaster.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ContractId,CustomerId,FromDate,ToDate,ReturnDate")] Contract contract)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(contract);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(contract);
+            if (!ModelState.IsValid) return View(contract);
+            _context.Add(contract);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
-
+        */
         // GET: Contracts/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
