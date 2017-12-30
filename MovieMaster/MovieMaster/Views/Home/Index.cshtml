@@ -19,22 +19,22 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            <a asp-action="FirstNameSort" >@Html.DisplayNameFor(model => model.FirstName)</a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            <a asp-action="LastNameSort">@Html.DisplayNameFor(model => model.LastName)</a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Street)
+            <a asp-action="StreetSort">@Html.DisplayNameFor(model => model.Street)</a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Street)
+            <a asp-action="ZipcodeSort">@Html.DisplayNameFor(model => model.ZipCode)</a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ZipCode)
+            <a asp-action="CitySort">@Html.DisplayNameFor(model => model.City)</a>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            <a asp-action="CountrySort">@Html.DisplayNameFor(model => model.Country)</a>
         </th>
         <th></th>
     </tr>
@@ -64,9 +64,18 @@
                     @Html.DisplayFor(modelcustomer => customer.Country)
                 </td>
                 <td>
-                    <form asp-action="RentAMovie" asp-route-id="@customer.CustomerId">
-                        <button class="btn btn-success btn-xs">Rent A Movie</button>
-                    </form>
+                    @if (customer.Contract)
+                    {
+                        <form asp-controller="Contracts" asp-action="index">
+                            <button class="btn btn-success btn-xs">Return</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="RentAMovie" asp-route-id="@customer.CustomerId">
+                            <button class="btn btn-success btn-xs">Rent</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }

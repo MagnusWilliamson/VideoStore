@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
@@ -20,11 +17,8 @@ namespace MovieMaster.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Movie.ToListAsync());
-        }
-
+        public async Task<IActionResult> Index()=>View(await _context.Movie.ToListAsync());
+ 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -149,5 +143,13 @@ namespace MovieMaster.Controllers
         {
             return _context.Movie.Any(e => e.MovieId == id);
         }
+
+        public async Task<IActionResult> TitelSort() => View("index",await (from movie in _context.Movie orderby movie.Titel select movie).ToListAsync());
+        public async Task<IActionResult> AgeSort() => View("index", await (from movie in _context.Movie orderby movie.AgeLimit select movie).ToListAsync());
+        public async Task<IActionResult> GenreSort() => View("index", await (from movie in _context.Movie orderby movie.Genre select movie).ToListAsync());
+        public async Task<IActionResult> PriceSort() => View("index", await (from movie in _context.Movie orderby movie.Price select movie).ToListAsync());
+        public async Task<IActionResult> DescriptionSort() => View("index", await (from movie in _context.Movie orderby movie.Description select movie).ToListAsync());
+        public async Task<IActionResult> ReleaseDateSort() => View("index", await (from movie in _context.Movie orderby movie.ReleaseDate select movie).ToListAsync());
+
     }
 }

@@ -1,31 +1,27 @@
 ﻿@model IEnumerable<MovieMaster.Models.ContractViewModel>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
+@{ViewData["Title"] = "Index";}
 <h2>CONTRACTS</h2>
-
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CustomerName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FromDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReturnDate)
-                </th>
+            <th>
+                <a asp-action="CustSort">@Html.DisplayNameFor(model => model.CustomerName)</a>           
+            </th>
+            <th>
+                <a asp-action="FromdateSort">@Html.DisplayNameFor(model => model.FromDate)</a>           
+           </th>
+            <th>
+                <a asp-action="ToDateSort">@Html.DisplayNameFor(model => model.ToDate)</a>           
+            </th>       
+            <th>
+                <a asp-action="ReturnDateSort">@Html.DisplayNameFor(model => model.ReturnDate)</a>           
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem =>item.CustomerName)
@@ -37,14 +33,17 @@
                 @Html.DisplayFor(modelItem => item.ToDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
+                @if (item.ReturnDate != DateTime.MinValue)
+                {
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                }
             </td>
             <td>
                 <a class="btn btn-success btn-xs" asp-action="Details" asp-route-id="@item.ContractId">Details</a> 
-                <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> 
+                <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id="@item.ContractId">Return</a> 
                 <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

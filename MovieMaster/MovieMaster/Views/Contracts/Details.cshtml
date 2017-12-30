@@ -32,13 +32,16 @@
             @Html.DisplayNameFor(model => model.ReturnDate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ReturnDate)
+            @if (Model.ReturnDate != DateTime.MinValue)
+            {
+                @Html.DisplayFor(model => model.ReturnDate)
+            }
         </dd>
     </dl>
 </div>
 <div>
     <div>
         <a class="btn btn-success btn-xs" asp-controller="Contracts" asp-action="Index">Back to List</a>
-        <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id=@Model.ContractId >Edit</a>
+        <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id=@Model.ContractId >Return</a>
     </div>
 </div>

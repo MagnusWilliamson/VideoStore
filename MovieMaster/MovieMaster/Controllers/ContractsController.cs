@@ -59,8 +59,6 @@ namespace MovieMaster.Controllers
             return View(contract);
         }
         // POST: Contracts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ContractId,MovieId,CustomerId,FromDate,ToDate,ReturnDate")] Contract contract)
@@ -119,6 +117,64 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult CustSort() =>
+            View("Index", from contract in (_context.Contract.Join(_context.Customer, customer => customer.CustomerId,
+                    contract => contract.CustomerId,
+                    (contract, customer) => new ContractViewModel()
+                    {
+                        CustomerName = customer.FirstName + " " + customer.LastName,
+                        ContractId = contract.ContractId,
+                        CustomerId = contract.MovieId,
+                        FromDate = contract.FromDate,
+                        ToDate = contract.ToDate,
+                        ReturnDate = contract.ReturnDate,
+                        MovieId = contract.MovieId
+                    }))
+                orderby contract.CustomerName
+                select contract);
+        public IActionResult ReturnDateSort() =>
+            View("Index", from contract in (_context.Contract.Join(_context.Customer, customer => customer.CustomerId,
+                    contract => contract.CustomerId,
+                    (contract, customer) => new ContractViewModel()
+                    {
+                        CustomerName = customer.FirstName + " " + customer.LastName,
+                        ContractId = contract.ContractId,
+                        CustomerId = contract.MovieId,
+                        FromDate = contract.FromDate,
+                        ToDate = contract.ToDate,
+                        ReturnDate = contract.ReturnDate,
+                        MovieId = contract.MovieId
+                    })) orderby contract.ReturnDate select contract);
+        public IActionResult ToDateSort() =>
+            View("Index", from contract in (_context.Contract.Join(_context.Customer, customer => customer.CustomerId,
+                    contract => contract.CustomerId,
+                    (contract, customer) => new ContractViewModel()
+                    {
+                        CustomerName = customer.FirstName + " " + customer.LastName,
+                        ContractId = contract.ContractId,
+                        CustomerId = contract.MovieId,
+                        FromDate = contract.FromDate,
+                        ToDate = contract.ToDate,
+                        ReturnDate = contract.ReturnDate,
+                        MovieId = contract.MovieId
+                    }))
+                orderby contract.ToDate
+                select contract);
+        public IActionResult FromDateSort() =>
+            View("Index", from contract in (_context.Contract.Join(_context.Customer, customer => customer.CustomerId,
+                    contract => contract.CustomerId,
+                    (contract, customer) => new ContractViewModel()
+                    {
+                        CustomerName = customer.FirstName + " " + customer.LastName,
+                        ContractId = contract.ContractId,
+                        CustomerId = contract.MovieId,
+                        FromDate = contract.FromDate,
+                        ToDate = contract.ToDate,
+                        ReturnDate = contract.ReturnDate,
+                        MovieId = contract.MovieId
+                    }))
+                orderby contract.FromDate
+                select contract);
         private bool ContractExists(string id)
         {
             return _context.Contract.Any(e => e.ContractId == id);

@@ -20,10 +20,7 @@ namespace MovieMaster.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Customer.ToListAsync());
-        }
+        public async Task<IActionResult> Index() => View(await _context.Customer.ToListAsync());
 
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(string id)
@@ -144,10 +141,12 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool CustomerExists(string id)
         {
             return _context.Customer.Any(e => e.CustomerId == id);
         }
+        public IActionResult FirstNameSort() =>View("Index",(from customer in _context.Customer orderby customer.FirstName select customer));
+        public IActionResult LastNameSort() => View("Index", (from customer in _context.Customer orderby customer.LastName select customer));
+        public IActionResult ActiveSort() => View("Index", (from customer in _context.Customer orderby customer.Active select customer));
     }
 }
