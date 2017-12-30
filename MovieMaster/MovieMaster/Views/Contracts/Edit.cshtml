@@ -13,11 +13,8 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ContractId" />
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="CustomerId" />
+            <input type="hidden" asp-for="MovieId" />
             <div class="form-group">
                 <label asp-for="FromDate" class="control-label"></label>
                 <input asp-for="FromDate" class="form-control" />
@@ -34,14 +31,11 @@
                 <span asp-validation-for="ReturnDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-danger btn-xs" />
+                <a class="btn btn-success btn-xs" asp-controller="Contracts" asp-action="Index">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

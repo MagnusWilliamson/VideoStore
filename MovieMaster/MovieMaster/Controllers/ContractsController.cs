@@ -4,24 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
-
 namespace MovieMaster.Controllers
 {
     public class ContractsController : Controller
     {
         private readonly MovieMasterContext _context;
-
         public ContractsController(MovieMasterContext context)
         {
             _context = context;
         }
-
         // GET: Contracts
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Contract.ToListAsync());
-        }
-
+        public IActionResult Index() => View(_context.Contract.Join(_context.Customer, customer=> customer.CustomerId,
+            contract => contract.CustomerId,
+            (contract, customer) => new ContractViewModel()
+            {
+                CustomerName = customer.FirstName +" " + customer.LastName,
+                ContractId = contract.ContractId,
+                CustomerId = contract.MovieId,
+                FromDate = contract.FromDate,
+                ToDate = contract.ToDate,
+                ReturnDate = contract.ReturnDate,
+                MovieId = contract.MovieId
+            }));
         // GET: Contracts/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -39,27 +43,6 @@ namespace MovieMaster.Controllers
 
             return View(contract);
         }
-
-        // GET: Contracts/Create
-        /*
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Contracts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractId,CustomerId,FromDate,ToDate,ReturnDate")] Contract contract)
-        {
-            if (!ModelState.IsValid) return View(contract);
-            _context.Add(contract);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        */
         // GET: Contracts/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -75,13 +58,12 @@ namespace MovieMaster.Controllers
             }
             return View(contract);
         }
-
         // POST: Contracts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ContractId,CustomerId,FromDate,ToDate,ReturnDate")] Contract contract)
+        public async Task<IActionResult> Edit(string id, [Bind("ContractId,MovieId,CustomerId,FromDate,ToDate,ReturnDate")] Contract contract)
         {
             if (id != contract.ContractId)
             {
@@ -110,7 +92,6 @@ namespace MovieMaster.Controllers
             }
             return View(contract);
         }
-
         // GET: Contracts/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -128,7 +109,6 @@ namespace MovieMaster.Controllers
 
             return View(contract);
         }
-
         // POST: Contracts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -139,7 +119,6 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool ContractExists(string id)
         {
             return _context.Contract.Any(e => e.ContractId == id);

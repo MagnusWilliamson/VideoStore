@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieMaster.Models.Contract>
+﻿@model IEnumerable<MovieMaster.Models.ContractViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,7 +10,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
+                    @Html.DisplayNameFor(model => model.CustomerName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FromDate)
@@ -28,7 +28,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CustomerId)
+                @Html.DisplayFor(modelItem =>item.CustomerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FromDate)
@@ -40,9 +40,9 @@
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContractId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
+                <a class="btn btn-success btn-xs" asp-action="Details" asp-route-id="@item.ContractId">Details</a> 
+                <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> 
+                <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
             </td>
         </tr>
 }

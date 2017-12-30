@@ -11,6 +11,7 @@ namespace MovieMaster.Models
         public string Genre { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
     }
 }

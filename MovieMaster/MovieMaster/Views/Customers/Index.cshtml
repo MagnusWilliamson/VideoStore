@@ -4,43 +4,51 @@
     ViewData["Title"] = "Customer";
 }
 
-<h2>Customer</h2>
-<p>
-    <a asp-action="Create">Create New Customer</a>
-</p>
+<h2>CUSTOMERS</h2>
+
 <table class="table table-striped">
     <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Active)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <td></td>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var customer in Model)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Active)
+                @Html.DisplayFor(modelItem => customer.Active)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => customer.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => customer.LastName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+                <form asp-controller="Adresses" asp-action="CreateCustomerAdress" asp-route-customer=@customer.CustomerId>
+                    <button class="btn btn-success btn-xs">Adress</button>
+                </form>
+            </td>
+            <td>
+                <a class="btn btn-success btn-xs" asp-action="Details" asp-route-id="@customer.CustomerId">Details</a> 
+                <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id="@customer.CustomerId">Edit</a> 
+                <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@customer.CustomerId">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+<div>
+    <a class="btn btn-success btn-xs" asp-action="Create">New Customer</a>
+</div>

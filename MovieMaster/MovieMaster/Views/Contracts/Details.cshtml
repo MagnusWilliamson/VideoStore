@@ -37,6 +37,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ContractId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a class="btn btn-success btn-xs" asp-controller="Contracts" asp-action="Index">Back to List</a>
+        <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id=@Model.ContractId >Edit</a>
+    </div>
 </div>

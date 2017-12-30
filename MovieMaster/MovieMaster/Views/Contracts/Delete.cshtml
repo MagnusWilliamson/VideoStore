@@ -36,10 +36,9 @@
             @Html.DisplayFor(model => model.ReturnDate)
         </dd>
     </dl>
-    
     <form asp-action="Delete">
         <input type="hidden" asp-for="ContractId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-success btn-xs" asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-warning btn-xs" />
     </form>
 </div>

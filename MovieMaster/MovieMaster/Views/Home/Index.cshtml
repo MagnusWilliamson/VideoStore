@@ -40,32 +40,32 @@
     </tr>
     </thead>
    <tbody>
-    @foreach (var item in Model)
+    @foreach (var customer in Model)
     {
-        if (item.Active == true)
+        if (customer.Active == true)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @Html.DisplayFor(modelcustomer => customer.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelcustomer => customer.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Street)
+                    @Html.DisplayFor(modelcustomer => customer.Street)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ZipCode)
+                    @Html.DisplayFor(modelcustomer => customer.ZipCode)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City)
+                    @Html.DisplayFor(modelcustomer => customer.City)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Country)
+                    @Html.DisplayFor(modelcustomer => customer.Country)
                 </td>
                 <td>
-                    <form asp-action="RentAMovie" asp-route-id="@item.CustomerId">
-                        <button class="btn-success">Rent A Movie</button>
+                    <form asp-action="RentAMovie" asp-route-id="@customer.CustomerId">
+                        <button class="btn btn-success btn-xs">Rent A Movie</button>
                     </form>
                 </td>
             </tr>

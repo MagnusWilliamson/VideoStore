@@ -25,7 +25,7 @@
                 <td> @Html.DisplayFor(movie => m.Description) </td>
                 <td> @Html.DisplayFor(movie => m.ReleaseDate)</td>
                 <td> @Html.DisplayFor(movie => m.Price)</td>
-                <td><a asp-action="ContractInformation" asp-route-movie=@m.MovieId asp-route-customer=@Model.SelectedCustomer.CustomerId >Select</a></td></tr>
+                <td><a class="btn btn-success btn-xs" asp-action="ContractInformation" asp-route-movie=@m.MovieId asp-route-customer=@Model.SelectedCustomer.CustomerId >Select</a></td></tr>
         }
     }
 </table>
@@ -35,15 +35,13 @@
             @if (@Model.SelectedMovie != null && @Model.SelectedCustomer != null)
             {
                 <form asp-controller="Home" asp-action="CreateContract" asp-route-movie=@Model.SelectedMovie.MovieId asp-route-customer=@Model.SelectedCustomer.CustomerId>
-                    <div asp-validation-summary="All"></div>
-                    <button class="btn-success">Save</button>
+                    <button class="btn btn-success btn-xs">Save</button>
                 </form>
             }
             else
             {
                <form>
-                   <div></div>
-                   <button class="btn-block">Save</button>
+                   <button class="btn btn-default btn-xs">No Movie Selected</button>
                </form>
             }
         </div>

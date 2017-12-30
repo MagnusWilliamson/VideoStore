@@ -1,23 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using MovieMaster.Models;
-using MovieMaster.Data;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MovieMaster.Data;
+using MovieMaster.Models;
 
 namespace MovieMaster.Controllers
 {
     public class HomeController : Controller
     {
         private readonly MovieMasterContext _context;
-        public HomeController(MovieMasterContext context)
-        {
-            _context = context;
-        }
+        public HomeController(MovieMasterContext context) =>_context = context;
         public async Task<IActionResult> CreateContract(string movie, string customer)
         {
-            var contract = new Contract()
+            var contract = new Contract
             {
                 CustomerId = customer,
                 FromDate = DateTime.Now,
@@ -28,21 +26,43 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("index", "Contracts");
         }
+
         public IActionResult ContractInformation(string movie, string customer)
-        => View("RentAMovie",new RentalViewModel
+        {
+            var model = new RentalViewModel
             {
                 SelectedCustomer = (_context.Customer.Cast<Customer>().Where(u => u.CustomerId == customer)).Single(),
                 SelectedMovie = (_context.Movie.Cast<Movie>().Where(u => u.MovieId == movie)).Single(),
-                MovieList = _context.Movie.ToList() 
-            });
-        public IActionResult RentAMovie(string id) => View(new RentalViewModel
+                MovieList = _context.Movie.ToList()
+            };
+
+            foreach (var mov in _context.Movie)
             {
-            SelectedCustomer = (_context.Customer.Cast<Customer>().Where(u => u.CustomerId == id)).Single(),
-            MovieList = _context.Movie.ToList()
-            });
-        public IActionResult Index() => View(_context.Customer.Join(_context.Adress, customer => customer.CustomerId,
+                if (_context.Contract.Cast<Contract>().SingleOrDefault(m => (m.MovieId == mov.MovieId)&&(m.ReturnDate > DateTime.Now)) == null) continue;
+                model.MovieList.Remove(mov);
+            }
+            return View("RentAMovie", model);
+        }
+
+        public IActionResult RentAMovie(string id)
+        {         
+            var model = new RentalViewModel
+            {
+                SelectedCustomer = (_context.Customer.Cast<Customer>().Where(u => u.CustomerId == id)).Single(),
+                MovieList = _context.Movie.ToList()
+            };
+            foreach (var movie in _context.Movie)
+            {
+                if (_context.Contract.Cast<Contract>().SingleOrDefault(m => (m.MovieId == movie.MovieId) && (m.ReturnDate > DateTime.Now)) == null) continue;
+                model.MovieList.Remove(movie);
+            }
+            return View(model);
+        }
+
+        public IActionResult Index() => View(_context.Customer.Join(
+                _context.Adress, customer => customer.CustomerId,
                 adress => adress.CustomerId,
-                (customer, adress) => new CustomerViewModel()
+                (customer, adress) => new CustomerViewModel
                 {
                     Active = customer.Active,
                     CustomerId = customer.CustomerId,

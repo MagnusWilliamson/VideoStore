@@ -10,42 +10,24 @@ namespace MovieMaster.Controllers
     public class AdressesController : Controller
     {
         private readonly MovieMasterContext _context;
-
-        public AdressesController(MovieMasterContext context)
-        {
-            _context = context;
-        }
-
+        public AdressesController(MovieMasterContext context) => _context = context;
         // GET: Adresses
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Adress.ToListAsync());
-        }
-
-        // GET: Adresses/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
+        public IActionResult CreateCustomerAdress(string customer) => new CustomerAdressViewModel
             {
-                return NotFound();
-            }
-
-            var adress = await _context.Adress
-                .SingleOrDefaultAsync(m => m.AdressId == id);
-            if (adress == null)
+                Customer = _context.Customer.Cast<Customer>().Single(cust => cust.CustomerId == customer),
+                Adress = _context.Adress.FirstOrDefault(adress => adress.CustomerId == customer)
+            }.Adress == null ? base.View("Create", new Adress() { CustomerId = customer}) : base.View("Details", new CustomerAdressViewModel
             {
-                return NotFound();
-            }
-
-            return View(adress);
-        }
-
+                Customer = _context.Customer.Cast<Customer>().Single(cust => cust.CustomerId == customer),
+                Adress = _context.Adress.FirstOrDefault(adress => adress.CustomerId == customer)
+            });
+       /*
         // GET: Adresses/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        */
         // POST: Adresses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -53,29 +35,21 @@ namespace MovieMaster.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AdressId,CustomerId,Street,City,ZipCode,Country")] Adress adress)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(adress);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(adress);
+            if (!ModelState.IsValid) return View(adress);
+            _context.Add(adress);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index","Customers");
         }
 
         // GET: Adresses/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string customer)
         {
-            if (id == null)
+            var model = await _context.Adress.SingleOrDefaultAsync(m => m.CustomerId == customer);
+            if (model == null)
             {
                 return NotFound();
             }
-
-            var adress = await _context.Adress.SingleOrDefaultAsync(m => m.AdressId == id);
-            if (adress == null)
-            {
-                return NotFound();
-            }
-            return View(adress);
+            return View(model);
         }
 
         // POST: Adresses/Edit/5
@@ -83,13 +57,8 @@ namespace MovieMaster.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AdressId,CustomerId,Street,City,ZipCode,Country")] Adress adress)
+        public async Task<IActionResult> Edit([Bind("AdressId,CustomerId,Street,City,ZipCode,Country")] Adress adress)
         {
-            if (id != adress.AdressId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -108,7 +77,7 @@ namespace MovieMaster.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("index", "Customers");
             }
             return View(adress);
         }
@@ -128,7 +97,7 @@ namespace MovieMaster.Controllers
                 return NotFound();
             }
 
-            return View(adress);
+            return RedirectToAction("index", "Customers");
         }
 
         // POST: Adresses/Delete/5
@@ -139,7 +108,7 @@ namespace MovieMaster.Controllers
             var adress = await _context.Adress.SingleOrDefaultAsync(m => m.AdressId == id);
             _context.Adress.Remove(adress);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("index", "Customers"); ;
         }
 
         private bool AdressExists(string id)

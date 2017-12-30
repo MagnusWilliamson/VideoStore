@@ -1,48 +1,39 @@
-﻿@model MovieMaster.Models.Adress
-
+﻿@model MovieMaster.Models.CustomerAdressViewModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "CUSTOMER ADRESS DETAILS";
 }
-
-<h2>Details</h2>
-
+<h2>DETAILS</h2>
 <div>
-    <h4>Adress</h4>
+    <h4>@Model.Customer.FirstName @Model.Customer.LastName</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerId)
+       <dt>
+            @Html.DisplayNameFor(model => model.Adress.Street)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CustomerId)
+            @Html.DisplayFor(model => model.Adress.Street)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Street)
+            @Html.DisplayNameFor(model => model.Adress.City)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Street)
+            @Html.DisplayFor(model => model.Adress.City)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.Adress.ZipCode)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.City)
+            @Html.DisplayFor(model => model.Adress.ZipCode)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ZipCode)
+            @Html.DisplayNameFor(model => model.Adress.Country)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ZipCode)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Country)
+            @Html.DisplayFor(model => model.Adress.Country)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AdressId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-success btn-xs" asp-controller="Customers" asp-action="Index">Back to List</a>
+    <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-customer=@Model.Customer.CustomerId >Edit</a>
 </div>
