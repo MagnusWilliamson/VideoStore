@@ -9,10 +9,7 @@ namespace MovieMaster.Controllers
     public class ContractsController : Controller
     {
         private readonly MovieMasterContext _context;
-        public ContractsController(MovieMasterContext context)
-        {
-            _context = context;
-        }
+        public ContractsController(MovieMasterContext context) =>_context = context;
         // GET: Contracts
         public IActionResult Index() => View(_context.Contract.Join(_context.Customer, customer=> customer.CustomerId,
             contract => contract.CustomerId,

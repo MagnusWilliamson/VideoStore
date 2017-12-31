@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
-
 namespace MovieMaster.Controllers
 {
     public class AdressesController : Controller
@@ -21,16 +20,7 @@ namespace MovieMaster.Controllers
                 Customer = _context.Customer.Cast<Customer>().Single(cust => cust.CustomerId == customer),
                 Adress = _context.Adress.FirstOrDefault(adress => adress.CustomerId == customer)
             });
-       /*
-        // GET: Adresses/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-        */
         // POST: Adresses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AdressId,CustomerId,Street,City,ZipCode,Country")] Adress adress)
@@ -40,48 +30,32 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index","Customers");
         }
-
         // GET: Adresses/Edit/5
-        public async Task<IActionResult> Edit(string customer)
-        {
-            var model = await _context.Adress.SingleOrDefaultAsync(m => m.CustomerId == customer);
-            if (model == null)
-            {
-                return NotFound();
-            }
-            return View(model);
-        }
-
+        public async Task<IActionResult> Edit(string customer) => View(await _context.Adress.SingleOrDefaultAsync(m => m.CustomerId == customer));
         // POST: Adresses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("AdressId,CustomerId,Street,City,ZipCode,Country")] Adress adress)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(adress);
+            try
             {
-                try
-                {
-                    _context.Update(adress);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AdressExists(adress.AdressId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("index", "Customers");
+                _context.Update(adress);
+                await _context.SaveChangesAsync();
             }
-            return View(adress);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AdressExists(adress.AdressId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("index", "Customers");
         }
-
         // GET: Adresses/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -99,7 +73,6 @@ namespace MovieMaster.Controllers
 
             return RedirectToAction("index", "Customers");
         }
-
         // POST: Adresses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -110,7 +83,6 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("index", "Customers"); ;
         }
-
         private bool AdressExists(string id)
         {
             return _context.Adress.Any(e => e.AdressId == id);

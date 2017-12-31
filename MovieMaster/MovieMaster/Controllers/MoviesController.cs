@@ -4,130 +4,77 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
-
 namespace MovieMaster.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly MovieMasterContext _context;
-
-        public MoviesController(MovieMasterContext context)
-        {
-            _context = context;
-        }
-
+        public MoviesController(MovieMasterContext context) =>_context = context;
         // GET: Movies
         public async Task<IActionResult> Index()=>View(await _context.Movie.ToListAsync());
- 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var movie = await _context.Movie
                 .SingleOrDefaultAsync(m => m.MovieId == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
+            if (movie == null) return NotFound();
             return View(movie);
         }
-
         // GET: Movies/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
+        public IActionResult Create() => View();
         // POST: Movies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MovieId,Titel,AgeLimit,Genre,Price,Description,ReleaseDate")] Movie movie)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(movie);
+            if (!ModelState.IsValid) return View(movie);
+            _context.Add(movie);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
-
         // GET: Movies/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var movie = await _context.Movie.SingleOrDefaultAsync(m => m.MovieId == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
+            if (movie == null) return NotFound();
             return View(movie);
         }
-
         // POST: Movies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MovieId,Titel,AgeLimit,Genre,Price,Description,ReleaseDate")] Movie movie)
         {
-            if (id != movie.MovieId)
+            if (id != movie.MovieId) return NotFound();
+            if (!ModelState.IsValid) return View(movie);
+            try
             {
-                return NotFound();
+                _context.Update(movie);
+                await _context.SaveChangesAsync();
             }
-
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
+                if (!MovieExists(movie.MovieId))
                 {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!MovieExists(movie.MovieId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return RedirectToAction(nameof(Index));
         }
-
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var movie = await _context.Movie
                 .SingleOrDefaultAsync(m => m.MovieId == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
+            if (movie == null) return NotFound();
             return View(movie);
         }
-
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -138,12 +85,7 @@ namespace MovieMaster.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool MovieExists(string id)
-        {
-            return _context.Movie.Any(e => e.MovieId == id);
-        }
-
+        private bool MovieExists(string id) => _context.Movie.Any(e => e.MovieId == id);
         public async Task<IActionResult> TitelSort() => View("index",await (from movie in _context.Movie orderby movie.Titel select movie).ToListAsync());
         public async Task<IActionResult> AgeSort() => View("index", await (from movie in _context.Movie orderby movie.AgeLimit select movie).ToListAsync());
         public async Task<IActionResult> GenreSort() => View("index", await (from movie in _context.Movie orderby movie.Genre select movie).ToListAsync());

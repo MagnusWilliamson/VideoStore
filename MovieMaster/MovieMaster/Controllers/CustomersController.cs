@@ -1,86 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieMaster.Data;
 using MovieMaster.Models;
-
 namespace MovieMaster.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly MovieMasterContext _context;
-
-        public CustomersController(MovieMasterContext context)
-        {
-            _context = context;
-        }
-
+        public CustomersController(MovieMasterContext context) =>_context = context;
         // GET: Customers
         public async Task<IActionResult> Index() => View(await _context.Customer.ToListAsync());
-
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var customer = await _context.Customer
                 .SingleOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
+            if (customer == null) return NotFound();
             return View(customer);
         }
-
         // GET: Customers/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
+        public IActionResult Create() => View();
         // POST: Customers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,Active,FirstName,LastName")] Customer customer)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(customer);
+            if (!ModelState.IsValid) return View(customer);
+            _context.Add(customer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
-
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var customer = await _context.Customer.SingleOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
+            if (customer == null) return NotFound();
             return View(customer);
         }
-
         // POST: Customers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("CustomerId,Active,FirstName,LastName")] Customer customer)
@@ -112,7 +73,6 @@ namespace MovieMaster.Controllers
             }
             return View(customer);
         }
-
         // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -130,7 +90,6 @@ namespace MovieMaster.Controllers
 
             return View(customer);
         }
-
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -73,7 +73,6 @@ namespace MovieMaster.Controllers
                 })));
         public IActionResult About() => View();     
         public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-
         public IActionResult FirstNameSort() =>
                     View("index", from customer in (_context.Customer.Join(
                     _context.Adress, customer => customer.CustomerId,
