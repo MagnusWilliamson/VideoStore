@@ -46,6 +46,6 @@ Bonus - ej krav för VG.
 - Inlämning ska ske som en länk till GitHub och en Zip-fil på itslearning.
 
 För att skapa databasen:
-
+Visual Studio -> Tools -> NuGet Package Manager -> Package Manager Console
 - Add-Migration InitialCreate
 - Update-Database
